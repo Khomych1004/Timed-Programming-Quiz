@@ -7,7 +7,7 @@ const questions = [
             "alerts", 
             "numbers"
         ],
-        correct: 0
+        correct: 2
     },
     {
         question:"The condition in an if / else statement is enclosed with ___________.",
@@ -17,7 +17,7 @@ const questions = [
             "parenthesis", 
             "square brackets"
         ],
-        correct: 2
+        correct: 1
     },
     {
         question:"Arrays in JavaScript can be used to store _________.",
@@ -37,7 +37,7 @@ const questions = [
             "quotes", 
             "parenthesis"
         ],
-        correct: 0
+        correct: 2
     },
     {
         question:"A very useful tool used during development and debugging for printing content to the debugger is:",
