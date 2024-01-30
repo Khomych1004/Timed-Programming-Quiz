@@ -19,6 +19,21 @@ var numberQuestions = helpersQuestions.getNumberQuestions();
 
 var players = [];
 
+//last page
+function openEndScreen() {
+
+    finalScore.textContent = timeBlock.textContent;
+  
+    clearInterval(timerID);
+  
+    questionsScreen.style.display = 'none';
+    endScreen.style.display = 'block';
+  
+    endScreen.append(line);
+    endScreen.append(p);
+  
+  };
+  
 //function to move to next question
 function nextQuestionScreen(answer) {
 
