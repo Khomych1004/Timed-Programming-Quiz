@@ -23,162 +23,191 @@ var players = [];
 function openEndScreen() {
 
     finalScore.textContent = timeBlock.textContent;
-  
+
     clearInterval(timerID);
-  
+
     questionsScreen.style.display = 'none';
     endScreen.style.display = 'block';
-  
+
     endScreen.append(line);
     endScreen.append(p);
-  
-  };
-  
+
+};
+
 //function to move to next question
 function nextQuestionScreen(answer) {
 
     questionsScreen.append(line);
     questionsScreen.append(p);
-  
+
     //display the answer within one second
     pauseAnswer(answer);
-  
+
     //examination. If there are no questions left, open the last page
     if (questionNumber < numberQuestions - 1) {
-  
-      questionNumber++;
-      logic();
-  
+
+        questionNumber++;
+        logic();
+
     } else {
-  
-      openEndScreen();
-  
+
+        openEndScreen();
+
     }
-  };
-  
+};
+
 //shows the answer within one second
 function pauseAnswer(text) {
 
     clearTimeout(pauseId);
-  
+
     p.textContent = text;
     line.style.display = 'block';
-  
+
     pauseId = setTimeout(function () {
-      //clearing response
-      p.textContent = "";
-      line.style.display = 'none';
-  
+        //clearing response
+        p.textContent = "";
+        line.style.display = 'none';
+
     }, 1000);
-  };
-  
+};
+
 //check for correct answer
 function checkingAnswer(correctAnswer, selectedAnswer) {
-  
+
     var myAudio;
-  
+
     if (correctAnswer == selectedAnswer) {
-  
-      myAudio = new Audio('./assets/sfx/correct.wav');
-      myAudio.play();
-  
-      return "Correct!";
-  
+
+        myAudio = new Audio('./assets/sfx/correct.wav');
+        myAudio.play();
+
+        return "Correct!";
+
     } else {
-  
-      myAudio = new Audio('./assets/sfx/incorrect.wav');
-      myAudio.play();
-  
-      time = time - 10;
-  
-      return "Wrong!";
+
+        myAudio = new Audio('./assets/sfx/incorrect.wav');
+        myAudio.play();
+
+        time = time - 10;
+
+        return "Wrong!";
     }
-  };
-  
+};
+
 //creating an answer option button
 function createButton(id, text) {
 
     let button = document.getElementById(id);
     var str = `${id + 1 + '. '}`;
-  
+
     if (button) {
-  
-      button.textContent = str + text;
-  
+
+        button.textContent = str + text;
+
     } else {
-  
-      //creating a button with an answer option
-      button = document.createElement('button');
-      button.id = id;
-      button.textContent = str + text;
-  
-      //handler for clicking the response button, checking the response
-      button.addEventListener('click', function () {
-  
-        var answer = "";
-  
-        //check for correct answer
-        answer = checkingAnswer(helpersQuestions.checkingAnswer(questionNumber), this.id);
-  
-        //move to next question
-        nextQuestionScreen(answer);
-  
-      });
-  
-      //adds a button with an answer option to the screen
-      choices.append(button);
+
+        //creating a button with an answer option
+        button = document.createElement('button');
+        button.id = id;
+        button.textContent = str + text;
+
+        //handler for clicking the response button, checking the response
+        button.addEventListener('click', function () {
+
+            var answer = "";
+
+            //check for correct answer
+            answer = checkingAnswer(helpersQuestions.checkingAnswer(questionNumber), this.id);
+
+            //move to next question
+            nextQuestionScreen(answer);
+
+        });
+
+        //adds a button with an answer option to the screen
+        choices.append(button);
     }
-  };
-  
-  //game time countdown starts
-  function startTime() {
-  
+};
+
+//game time countdown starts
+function startTime() {
+
     clearInterval(timerID);
     --time;
-  
+
     timerID = setInterval(function () {
-  
-      if (time < 10) {
-  
-        if (time < 0) {
-  
-          timeBlock.textContent = "00";
-          openEndScreen();
-  
+
+        if (time < 10) {
+
+            if (time < 0) {
+
+                timeBlock.textContent = "00";
+                openEndScreen();
+
+            } else {
+
+                timeBlock.textContent = "0" + time--;
+
+            }
         } else {
-  
-          timeBlock.textContent = "0" + time--;
-  
+
+            timeBlock.textContent = time--;
+
         }
-      } else {
-  
-        timeBlock.textContent = time--;
-  
-      }
     }, 1000);
-  };
-  
-  //displays the question and answer options
-  function logic() {
-  
+};
+
+//displays the question and answer options
+function logic() {
+
     //question
     questionsScreen.querySelector('#question-title').textContent = helpersQuestions.getQuestion(questionNumber);
     //answer options
     helpersQuestions.getAnswer(questionNumber).forEach((answer, idx) => createButton(idx, answer));
-  
-  };
-  
-  //function processing by pressing the start button
-  btnStart.addEventListener('click', function () {
-  
+
+};
+
+//function processing by pressing the start button
+btnStart.addEventListener('click', function () {
+
     timeBlock.textContent = time;
-  
+
     startTime();
-  
+
     startScreen.style.display = 'none';
     questionsScreen.style.display = 'block';
-  
+
     logic();
-  
-  });
-  
+
+});
+
+//recording players in storage
+function storePlayers(players) {
+
+
+    localStorage.setItem("players", JSON.stringify(players));
+
+};
+
+//binding a handler for saving the player to local storage
+btnSubmit.addEventListener('click', function () {
+
+    var playerName = initials.value;
+    var playerTime = finalScore.textContent;
+
+    var storedPlayers = JSON.parse(localStorage.getItem("players"));
+
+    if (storedPlayers !== null) {
+        players = storedPlayers;
+    }
+
+    players.push({
+        name: playerName,
+        time: playerTime
+    });
+
+    storePlayers(players);
+
+    window.location.href = 'highscores.html';
+});
