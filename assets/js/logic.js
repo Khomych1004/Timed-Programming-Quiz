@@ -19,6 +19,22 @@ var numberQuestions = helpersQuestions.getNumberQuestions();
 
 var players = [];
 
+//shows the answer within one second
+function pauseAnswer(text) {
+
+    clearTimeout(pauseId);
+  
+    p.textContent = text;
+    line.style.display = 'block';
+  
+    pauseId = setTimeout(function () {
+      //clearing response
+      p.textContent = "";
+      line.style.display = 'none';
+  
+    }, 1000);
+  };
+  
 //check for correct answer
 function checkingAnswer(correctAnswer, selectedAnswer) {
   
