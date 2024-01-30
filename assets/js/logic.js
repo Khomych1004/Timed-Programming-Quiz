@@ -19,6 +19,28 @@ var numberQuestions = helpersQuestions.getNumberQuestions();
 
 var players = [];
 
+//function to move to next question
+function nextQuestionScreen(answer) {
+
+    questionsScreen.append(line);
+    questionsScreen.append(p);
+  
+    //display the answer within one second
+    pauseAnswer(answer);
+  
+    //examination. If there are no questions left, open the last page
+    if (questionNumber < numberQuestions - 1) {
+  
+      questionNumber++;
+      logic();
+  
+    } else {
+  
+      openEndScreen();
+  
+    }
+  };
+  
 //shows the answer within one second
 function pauseAnswer(text) {
 
