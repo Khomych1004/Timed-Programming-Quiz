@@ -20,3 +20,13 @@ function dataFilling() {
         });
     };
 };
+
+//binding the local storage cleanup handler and clearing the screen
+clear.addEventListener('click', function () {
+
+    localStorage.clear();
+
+    while (highscores.firstChild) {
+        highscores.removeChild(highscores.firstChild);
+    };
+});
