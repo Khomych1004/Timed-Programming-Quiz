@@ -19,6 +19,29 @@ var numberQuestions = helpersQuestions.getNumberQuestions();
 
 var players = [];
 
+//check for correct answer
+function checkingAnswer(correctAnswer, selectedAnswer) {
+  
+    var myAudio;
+  
+    if (correctAnswer == selectedAnswer) {
+  
+      myAudio = new Audio('./assets/sfx/correct.wav');
+      myAudio.play();
+  
+      return "Correct!";
+  
+    } else {
+  
+      myAudio = new Audio('./assets/sfx/incorrect.wav');
+      myAudio.play();
+  
+      time = time - 10;
+  
+      return "Wrong!";
+    }
+  };
+  
 //creating an answer option button
 function createButton(id, text) {
 
