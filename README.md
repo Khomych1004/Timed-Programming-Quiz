@@ -1,5 +1,7 @@
 # Timed-Programming-Quiz
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ![application screenshot](assets/images/demo.gif)
 
 ## Description
